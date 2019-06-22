@@ -7,7 +7,7 @@ class Dashboard extends Component {
 
             <div>
 
-                <h1> Welcome to the Dashboard </h1>
+                <h1 className="alert alert-warning"> Welcome to the Dashboard </h1>
 
                 <ProjectItem />
 
