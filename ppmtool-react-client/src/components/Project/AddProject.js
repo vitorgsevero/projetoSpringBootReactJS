@@ -74,7 +74,7 @@ class AddProject extends Component {
 
                                     <div className="form-group">
                                         <input type="text" className={classnames("form-control form-control-lg", {
-                                            "is-invalid": errors.projectName
+                                            "is-invalid": errors.projectIdentifier
                                         })} placeholder="Unique Project ID" name="projectIdentifier" value={this.state.projectIdentifier} onChange={this.onChange} />
                                         {errors.projectIdentifier && (
                                             <div className="invalid-feedback">{errors.projectIdentifier}</div>
@@ -83,7 +83,7 @@ class AddProject extends Component {
 
                                     <div className="form-group">
                                         <textarea className={classnames("form-control form-control-lg", {
-                                            "is-invalid": errors.projectName
+                                            "is-invalid": errors.description
                                         })} placeholder="Project Description" name="description" value={this.state.description} onChange={this.onChange} />
                                         {errors.description && (
                                             <div className="invalid-feedback">{errors.description}</div>
