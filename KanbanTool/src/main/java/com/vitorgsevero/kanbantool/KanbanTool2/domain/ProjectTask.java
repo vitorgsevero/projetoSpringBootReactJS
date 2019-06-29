@@ -32,7 +32,7 @@ public class ProjectTask {
 	
 	private String acceptanceCriteria;
 	private String status;
-	private String priority;
+	private Integer priority;
 	
 	//ManyToOne with Backlog
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
@@ -90,11 +90,11 @@ public class ProjectTask {
 		this.status = status;
 	}
 
-	public String getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 

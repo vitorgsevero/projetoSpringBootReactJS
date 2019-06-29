@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.vitorgsevero.kanbantool.KanbanTool2.domain.ProjectTask;
 
 @Repository
-public interface projectTaskRepository extends CrudRepository<ProjectTask, Long>{
+public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long>{
 
 }
