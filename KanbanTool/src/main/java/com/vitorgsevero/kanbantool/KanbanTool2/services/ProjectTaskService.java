@@ -48,4 +48,11 @@ public class ProjectTaskService {
 		
 	}
 	
+	public Iterable<ProjectTask> findBacklogById(String id){
+		return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+	}
+	
+	
+	
+	
 }

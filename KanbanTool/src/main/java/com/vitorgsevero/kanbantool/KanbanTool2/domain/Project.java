@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Project {
@@ -49,7 +50,7 @@ public class Project {
 	private Date updated_At;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
-	
+	@JsonIgnore // It won't show this backlog (with all project tasks) object when search a project by id    
 	private Backlog backlog;
 	
 	public Backlog getBacklog() {
