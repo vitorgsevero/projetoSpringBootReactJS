@@ -28,15 +28,16 @@ public class ProjectTaskService {
 		//Update the Backlog Sequence
 		BacklogSequence++;
 		
+		backlog.setPTSequence(BacklogSequence);
 		
 		//Add Sequence to Project Task
 		projectTask.setProjectSequence(projectIdentifier+"-"+BacklogSequence);
 		projectTask.setProjectIdentifier(projectIdentifier);
 		
 		//Setting a Initial Priority to the Project Task when is NULL 
-	//	if(projectTask.getPriority()==0 || projectTask.getPriority()==null) {
-	//	projectTask.setPriority(3);
-	//	}
+		if(projectTask.getPriority()==null) {
+		projectTask.setPriority(3);
+		}
 		
 		//Setting a Initial Status to the Project Task when is NULL 
 		if(projectTask.getStatus()=="" || projectTask.getStatus()==null) {
