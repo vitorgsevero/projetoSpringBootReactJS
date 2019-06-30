@@ -1,7 +1,5 @@
 package com.vitorgsevero.kanbantool.KanbanTool2.web;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
