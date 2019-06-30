@@ -1,5 +1,7 @@
 package com.vitorgsevero.kanbantool.KanbanTool2.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class ProjectTaskService {
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
 	}
 	
+	//get by ID
 	public ProjectTask findPTByProjectSequence(String backlog_id, String pt_id) {
 		
 		//make sure we are searching on an existing backlog
@@ -58,6 +61,7 @@ public class ProjectTaskService {
 		return projectTaskRepository.findByProjectSequence(pt_id);
 	}
 
+	//post
 	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
 		
 		
@@ -98,9 +102,10 @@ public class ProjectTaskService {
 		
 	}
 	
+	//update
 	public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String pt_id) {
 		
-		ProjectTask projectTask = projectTaskRepository.findByProjectSequence(pt_id);
+		ProjectTask projectTask = this.findPTByProjectSequence(backlog_id, pt_id);
 		
 		projectTask = updatedTask;
 		
@@ -108,6 +113,22 @@ public class ProjectTaskService {
 		
 	}
 	
-
-
+	
+	//delete
+	public void deleteByProjectSequence(String backlog_id, String pt_id) {
+		ProjectTask projectTask = findPTByProjectSequence(backlog_id, pt_id);
+		
+		Backlog backlog = projectTask.getBacklog();
+		
+		List<ProjectTask> pts = backlog.getProjectTasks(); 
+		pts.remove(projectTask);
+		backlogRepository.save(backlog);
+		
+		projectTaskRepository.delete(projectTask);
+		
+	}
+	
+	
+	
+	
 }
