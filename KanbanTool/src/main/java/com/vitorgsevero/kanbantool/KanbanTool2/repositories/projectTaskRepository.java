@@ -11,4 +11,6 @@ import com.vitorgsevero.kanbantool.KanbanTool2.domain.ProjectTask;
 public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long>{
 
 	List<ProjectTask> findByProjectIdentifierOrderByPriority(String id);
+	
+	ProjectTask findByProjectSequence(String sequence); 
 }
