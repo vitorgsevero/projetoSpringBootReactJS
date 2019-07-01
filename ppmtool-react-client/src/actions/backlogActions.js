@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { GET_ERRORS, GET_BACKLOG } from './types';
-import { async } from 'q';
-
 
 
 
@@ -33,4 +31,4 @@ export const getBacklog = backlog_id => async dispatch => {
     } catch (error) {
 
     }
-}
+};
