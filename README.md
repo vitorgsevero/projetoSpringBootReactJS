@@ -8,7 +8,7 @@ Full Stack Project: Spring Boot 2.0, ReactJS, Redux and Bootstrap 4+
 
 * Created the front-end using ReactJS and Bootstrap 4+
 
-* Consume a RESTful API with React/Redux
+* Consume a RESTful API with ReactJS/Redux
 
 * Redux and Thunk to manage the state of the application in the front-end
 
