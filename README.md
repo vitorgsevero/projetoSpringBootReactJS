@@ -2,7 +2,7 @@
 
 Full Stack Project: Spring Boot 2.0, ReactJS, Redux and Bootstrap 4+
 
-# These are some of the cool things I have worked on this repository:
+### These are some of the cool things I have worked on this repository:
 
 * Built my REST APIs with Spring Boot 2.0 for CRUD operations
 
@@ -17,7 +17,7 @@ Full Stack Project: Spring Boot 2.0, ReactJS, Redux and Bootstrap 4+
 * Deploy application to Heroku
 
 
-# Here is the link of the application on Heroku:
+#### Here is the link of the application on Heroku:
 
 ```
 Link to Heroku
