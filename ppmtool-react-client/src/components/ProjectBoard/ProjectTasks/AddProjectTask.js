@@ -24,6 +24,12 @@ class AddProjectTask extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
+        }
+    }
+
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value })
     }
@@ -44,6 +50,7 @@ class AddProjectTask extends Component {
 
     render() {
         const { id } = this.props.match.params;
+        const { errors } = this.state;
 
         return (
             <div className="add-PBI">
@@ -57,10 +64,17 @@ class AddProjectTask extends Component {
                             <p className="lead text-center">Project Name + Project Code</p>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
-                                    <input type="text" className="form-control form-control-lg" name="summary" placeholder="Project Task summary" value={this.state.summary} onChange={this.onChange} />
+                                    <input type="text" className={classnames("form-control form-control-lg", {
+                                        "is-invalid": errors.summary
+                                    })} name="summary" placeholder="Project Task summary" value={this.state.summary} onChange={this.onChange} />
+                                    {errors.summary && (
+                                        <div className="invalid-feedback">{errors.summary}</div>
+                                    )}
                                 </div>
                                 <div className="form-group">
-                                    <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria" value={this.state.acceptanceCriteria} onChange={this.onChange}></textarea>
+                                    <textarea className={classnames("form-control form-control-lg", {
+                                        "is-invalid": errors.acceptanceCriteria
+                                    })} placeholder="Acceptance Criteria" name="acceptanceCriteria" value={this.state.acceptanceCriteria} onChange={this.onChange}></textarea>
                                 </div>
                                 <h6>Due Date</h6>
                                 <div className="form-group">
@@ -89,14 +103,19 @@ class AddProjectTask extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
         )
     }
 }
 
 AddProjectTask.propTypes = {
-    addProjectTask: PropTypes.func.isRequired
+    addProjectTask: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
-export default connect(null, { addProjectTask })(AddProjectTask);
+const mapStateToProps = state => ({
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, { addProjectTask })(AddProjectTask);
