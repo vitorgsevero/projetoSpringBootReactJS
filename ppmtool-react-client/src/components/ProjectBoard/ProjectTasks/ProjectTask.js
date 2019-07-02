@@ -39,7 +39,7 @@ class ProjectTask extends Component {
                         Delete
                     </button>
                 </div>
-            </div >
+            </div>
         )
     }
 }
