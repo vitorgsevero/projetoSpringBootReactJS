@@ -1,5 +1,6 @@
 package com.vitorgsevero.kanbantool.KanbanTool2.domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,19 +14,24 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Email(message = "Username needs to be an email!")
-	@NotBlank(message = "Username is required")
-	@Column(unique = true)
-	private String username;
+
+    @Email(message = "Username needs to be an email")
+    @NotBlank(message = "username is required")
+    @Column(unique = true)
+    private String username;
 	
 	@NotBlank(message = "Please enter your full name")
 	private String fullName;
@@ -116,5 +122,39 @@ public class User {
 	protected void onUpdate() {
 		this.update_At = new Date();
 	}
+
+	
+	/* User Details Interface methods */
+	
+	@Override
+	@JsonIgnore
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isEnabled() {
+		return true;
+	}
+	
 	
 }
