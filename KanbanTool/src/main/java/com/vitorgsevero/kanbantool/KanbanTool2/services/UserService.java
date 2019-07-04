@@ -5,23 +5,31 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.vitorgsevero.kanbantool.KanbanTool2.domain.User;
+import com.vitorgsevero.kanbantool.KanbanTool2.exceptions.UsernameAlreadyExistsException;
 import com.vitorgsevero.kanbantool.KanbanTool2.repositories.UserRepository;
 
 @Service
 public class UserService {
 
 	
-	@Autowired
-	private UserRepository userRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	public User saveUser(User newUser) {
-		newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+	public User saveUser (User newUser) {
 		
-		//Username has to be unique 
-		return userRepository.save(newUser);
+		try {
+			newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+			//Username has to be unique 
+			newUser.setUsername(newUser.getUsername());
+			return userRepository.save(newUser);
+			
+		}catch(Exception error) {
+			throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+"' already exists!");
+		}
+
 	}
 	
 }
