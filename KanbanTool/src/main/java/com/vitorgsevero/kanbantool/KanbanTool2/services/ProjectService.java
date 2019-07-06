@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 
 import com.vitorgsevero.kanbantool.KanbanTool2.domain.Backlog;
 import com.vitorgsevero.kanbantool.KanbanTool2.domain.Project;
+import com.vitorgsevero.kanbantool.KanbanTool2.domain.User;
 import com.vitorgsevero.kanbantool.KanbanTool2.exceptions.ProjectIdException;
 import com.vitorgsevero.kanbantool.KanbanTool2.repositories.BacklogRepository;
 import com.vitorgsevero.kanbantool.KanbanTool2.repositories.ProjectRepository;
+import com.vitorgsevero.kanbantool.KanbanTool2.repositories.UserRepository;
 
 @Service
 public class ProjectService {
@@ -18,9 +20,18 @@ public class ProjectService {
 	@Autowired
 	private BacklogRepository backlogRepository;
 	
-	public Project saveOrUpdateProject(Project project) {
+	@Autowired
+	private UserRepository userRepository;
+	
+	public Project saveOrUpdateProject(Project project, String username) {
 		
 		try {
+			
+			User user = userRepository.findByUsername(username);
+			project.setUser(user);
+			project.setProjectLeader(user.getUsername());
+			
+			
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 			
 			//new project
