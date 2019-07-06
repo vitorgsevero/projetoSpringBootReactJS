@@ -1,6 +1,5 @@
 package com.vitorgsevero.kanbantool.KanbanTool2.services;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,12 @@ public class ProjectTaskService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	public Iterable<ProjectTask> findBacklogById(String id) {
+	@Autowired
+	private ProjectService projectService;
+	
+	public Iterable<ProjectTask> findBacklogById(String id, String username) {
 		
-		Project project = projectRepository.findByProjectIdentifier(id);
-		
-		if(project==null) {
-			throw new ProjectNotFoundException("Project with ID: '"+id+"' does not exist!"); 
-		}
+		projectService.findProjectByIdentifier(id, username);
 		
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
 	}
@@ -62,12 +60,11 @@ public class ProjectTaskService {
 	}
 
 	//post
-	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
+	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {
 		
 		
-		try{
 			//PTs to be added to a specific project, project != null, BL exists
-			Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+			Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
 			
 			//Set the Backlog to the Project Task
 			projectTask.setBacklog(backlog);
@@ -84,7 +81,7 @@ public class ProjectTaskService {
 			projectTask.setProjectIdentifier(projectIdentifier);
 			
 			//Setting a Initial Priority to the Project Task when is NULL 
-			if(projectTask.getPriority()==0 || projectTask.getPriority()==null) {
+			if(projectTask.getPriority()==null || projectTask.getPriority()==0) {
 			projectTask.setPriority(3);
 			}
 			
@@ -95,10 +92,6 @@ public class ProjectTaskService {
 			
 			return projectTaskRepository.save(projectTask);
 				
-
-		}catch (Exception e) {
-			throw new ProjectNotFoundException("Project Not Found!");
-		}
 		
 	}
 	
