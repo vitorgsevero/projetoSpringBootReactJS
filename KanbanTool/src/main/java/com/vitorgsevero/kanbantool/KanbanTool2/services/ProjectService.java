@@ -7,6 +7,7 @@ import com.vitorgsevero.kanbantool.KanbanTool2.domain.Backlog;
 import com.vitorgsevero.kanbantool.KanbanTool2.domain.Project;
 import com.vitorgsevero.kanbantool.KanbanTool2.domain.User;
 import com.vitorgsevero.kanbantool.KanbanTool2.exceptions.ProjectIdException;
+import com.vitorgsevero.kanbantool.KanbanTool2.exceptions.ProjectNotFoundException;
 import com.vitorgsevero.kanbantool.KanbanTool2.repositories.BacklogRepository;
 import com.vitorgsevero.kanbantool.KanbanTool2.repositories.ProjectRepository;
 import com.vitorgsevero.kanbantool.KanbanTool2.repositories.UserRepository;
@@ -56,7 +57,7 @@ public class ProjectService {
 	}
 	
 	//find by ID
-	public Project findProjectByIdentifier(String projectId) {
+	public Project findProjectByIdentifier(String projectId, String username) {
 		
 		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 		
@@ -64,23 +65,26 @@ public class ProjectService {
 			throw new ProjectIdException("Project ID '"+ projectId+"' does not exist.");
 		}
 		
+		if(!project.getProjectLeader().equals(username)) {
+			throw new ProjectNotFoundException("Project not found in your account!");
+		}
+		
+		
+		
 		return project;
 	}
 	
 	//find All
-	public Iterable<Project> findAllProjects(){
-		return projectRepository.findAll();
+	public Iterable<Project> findAllProjects(String username){
+		return projectRepository.findAllByProjectLeader(username);
 	}
 	
 	//delete by ID
-	public void deleteProjectByIdentifier(String projectId) {
-		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+	public void deleteProjectByIdentifier(String projectId, String username) {
+
 		
-		if(project == null) {
-			throw new ProjectIdException("Cannot delete project with ID'"+projectId+"'. This project does not exist.");
-		}
 		
-		projectRepository.delete(project);
+		projectRepository.delete(findProjectByIdentifier(projectId, username));
 		
 	}
 	
