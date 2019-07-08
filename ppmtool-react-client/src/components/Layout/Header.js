@@ -29,7 +29,7 @@ class Header extends Component {
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <Link className="nav-link" to="/dashboard">
-                            <i className="fas fa-user-circle mr-1"></i> {user.fullName}
+                            <i className="fas fa-user-circle mr-1" /> {user.fullname}
                         </Link>
                     </li>
                     <li className="nav-item">
@@ -66,7 +66,6 @@ class Header extends Component {
         } else {
             headerLinks = userIsNotAuthenticated;
         }
-
 
         return (
             <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
