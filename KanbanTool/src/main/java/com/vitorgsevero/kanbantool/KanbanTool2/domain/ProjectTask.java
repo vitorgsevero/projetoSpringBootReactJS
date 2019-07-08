@@ -2,7 +2,6 @@ package com.vitorgsevero.kanbantool.KanbanTool2.domain;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -43,8 +43,13 @@ public class ProjectTask {
 	@Column(updatable = false)
 	private String projectIdentifier;
 	
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date dueDate;
+	
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date created_At;
+	
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date updated_At;
 	
 	public ProjectTask() {
